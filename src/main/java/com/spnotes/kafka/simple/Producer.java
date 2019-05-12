@@ -6,7 +6,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
 import java.util.Scanner;
-
+import java.io.*;
 /**
  * Created by sunilpatil on 12/28/15.
  */
@@ -18,7 +18,10 @@ public class Producer {
             System.exit(-1);
         }
         String topicName = argv[0];
-        in = new Scanner(System.in);
+        File file = new File("/Users/therohan_21/Desktop/text");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        
+        //in = new Scanner(System.in);
         System.out.println("Enter message(type exit to quit)");
 
         //Configure the Producer
@@ -28,14 +31,16 @@ public class Producer {
         configProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringSerializer");
 
         org.apache.kafka.clients.producer.Producer producer = new KafkaProducer(configProperties);
-        String line = in.nextLine();
-        while(!line.equals("exit")) {
+        //String line = in.nextLine();
+        //while(!line.equals("exit")) {
+        String st;
+        while((st = br.readLine()) != null) {
             //TODO: Make sure to use the ProducerRecord constructor that does not take parition Id
-            ProducerRecord<String, String> rec = new ProducerRecord<String, String>(topicName,line);
+            ProducerRecord<String, String> rec = new ProducerRecord<String, String>(topicName,st);
             producer.send(rec);
-            line = in.nextLine();
+            //line = in.nextLine();
         }
-        in.close();
+        //in.close();
         producer.close();
     }
 }

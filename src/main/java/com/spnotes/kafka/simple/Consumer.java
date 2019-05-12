@@ -31,6 +31,7 @@ public class Consumer {
         String line = "";
         while (!line.equals("exit")) {
             line = in.next();
+            System.out.println("Hi");
         }
         consumerRunnable.getKafkaConsumer().wakeup();
         System.out.println("Stopping consumer .....");
@@ -58,11 +59,17 @@ public class Consumer {
             kafkaConsumer = new KafkaConsumer<String, String>(configProperties);
             kafkaConsumer.subscribe(Arrays.asList(topicName));
             //Start processing messages
+            int count;
             try {
                 while (true) {
                     ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
-                    for (ConsumerRecord<String, String> record : records)
-                        System.out.println(record.value());
+                    for (ConsumerRecord<String, String> record : records) {
+                    	System.out.println(record.value());
+                    	String s[] = record.value().split(" ");
+                    	System.out.println("Word count is "+s.length);
+                    }
+                        
+                    
                 }
             }catch(WakeupException ex){
                 System.out.println("Exception caught " + ex.getMessage());
