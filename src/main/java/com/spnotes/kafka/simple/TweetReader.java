@@ -22,8 +22,10 @@ public class TweetReader {
 		twitter4j.Twitter twitter = tf.getInstance();
 		
 		List<Status> status = twitter.getHomeTimeline();
+		int i = 0;
 		for(Status st: status) {
 			System.out.println(st.getUser().getName()+"-------"+st.getText());
+			System.out.println(i++);
 			//System.out.println(st.getUser().getName());
 		}
 	}

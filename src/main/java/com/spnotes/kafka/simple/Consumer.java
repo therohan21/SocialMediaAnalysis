@@ -31,7 +31,7 @@ public class Consumer {
         String line = "";
         while (!line.equals("exit")) {
             line = in.next();
-            System.out.println("Hi");
+            //System.out.println("Hi");
         }
         consumerRunnable.getKafkaConsumer().wakeup();
         System.out.println("Stopping consumer .....");
